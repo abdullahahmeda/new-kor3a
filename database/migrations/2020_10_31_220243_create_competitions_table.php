@@ -14,7 +14,7 @@ class CreateCompetitionsTable extends Migration
     public function up()
     {
         Schema::create('competitions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id');
             /* $table->integer('week'); */
             $table->integer('day');
             $table->timestamp('trip_at');
