@@ -18,7 +18,7 @@ class CreateCompetitionsTable extends Migration
             /* $table->integer('week'); */
             $table->integer('day');
             $table->timestamp('trip_at');
-            $table->timestamp('finish_at');
+            $table->timestamp('finish_at')->nullable();
             $table->integer('discount_percentage')/* ->nullable() */;
             $table->integer('available_tickets');
             $table->unsignedBigInteger('winner_id')->nullable();
