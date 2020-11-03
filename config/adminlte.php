@@ -321,7 +321,7 @@ return [
             'topnav'    => true
         ],
         [
-            'text'      => 'القرع هذا الاسبوع',
+            'text'      => 'القرع',
             'icon'      => 'fas fa-trophy',
             'url'       => 'admin/competitions'
         ],

@@ -25,6 +25,7 @@
             <th>عدد التذاكر المتاحة</th>
             <th>عدد المشاركين</th>
             <th>الراعي</th>
+            <th>الحالة</th>
             <th>الإجراءات</th>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
                     <td>{{ $competition->available_tickets }}</td>
                     <td>{{ count($competition->participants) }}</td>
                     <td>{{ $competition->sponsor }}</td>
+                    <td>{{ $competition->status == 'active' ? 'مفعلة' : 'منتهية' }}</td>
                     <td>
                         <a class="btn btn-sm btn-warning" href="{{ route('admin.competitions.edit', $competition) }}">تعديل</a>
                         <form class="d-inline-block" method="POST" action="{{ route('admin.competitions.destroy', $competition) }}" onsubmit="event.preventDefault(); confirmDelete(this)">

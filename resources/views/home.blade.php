@@ -34,8 +34,6 @@
                 <p class="mb-4">
                     التذاكر المجانية والمخفضة للرحلات من <strong>السعودية</strong> إلى <strong>اليمن</strong>
                 </p>
-                <p>{{ now()->dayOfWeek }}</p>
-                <p>{{ now()->getWeekStartsAt() }}</p>
                 <form action="/" method="GET">
                     <div class="form-group flex items-center mb-2">
                         <label for="day" class="block w-24 font-bold">اختر اليوم:</label>
