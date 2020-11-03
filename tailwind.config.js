@@ -4,7 +4,7 @@ module.exports = {
     // purgeLayersByDefault: true,
   },
   purge: [
-    './resources/views/*.blade.php'
+    './resources/**/*.blade.php'
   ],
   theme: {
     extend: {},
