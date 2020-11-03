@@ -34,6 +34,8 @@
                 <p class="mb-4">
                     التذاكر المجانية والمخفضة للرحلات من <strong>السعودية</strong> إلى <strong>اليمن</strong>
                 </p>
+                <p>{{ now()->dayOfWeek }}</p>
+                <p>{{ now()->getWeekStartsAt() }}</p>
                 <form action="/" method="GET">
                     <div class="form-group flex items-center mb-2">
                         <label for="day" class="block w-24 font-bold">اختر اليوم:</label>
@@ -41,7 +43,7 @@
                             <option value="" selected>الكل</option>
                             <option value="6" {{ Request::get('day') == '6' ? 'selected' : '' }}>السبت</option>
                             <option value="0" {{ Request::get('day') == '0' ? 'selected' : '' }}>الأحد</option>
-                            <option value="1" {{ Request::get('day') == '1' ? 'selected' : '' }}>الاثنين</option>
+                            <option value="1" {{ Request::get('day') == '1' ? 'selected' : '' }}>الإثنين</option>
                             <option value="2" {{ Request::get('day') == '2' ? 'selected' : '' }}>الثلاثاء</option>
                             <option value="3" {{ Request::get('day') == '3' ? 'selected' : '' }}>الأربعاء</option>
                             <option value="4" {{ Request::get('day') == '4' ? 'selected' : '' }}>الخميس</option>
