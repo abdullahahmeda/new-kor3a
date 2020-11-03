@@ -29,12 +29,6 @@ class CreateCompetitionsTable extends Migration
             $table->string('banner')->nullable();
             $table->timestamps();
         });
-
-        Schema::table('competitions', function(Blueprint $table) {
-            $table->foreign('winner_id')
-                ->references('id')->on('participants')
-                ->onDelete('cascade');
-        });
     }
 
     /**

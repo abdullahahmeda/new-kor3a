@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParticipantsTable extends Migration
+class CreateCompetitionsForeignKeys extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('phone');
-            $table->unsignedBigInteger('competition_id')->nullable();
-            $table->timestamps();
+        Schema::table('competitions', function (Blueprint $table) {
+            $table->foreign('winner_id')
+                ->references('id')->on('participants')
+                ->onDelete('cascade');
         });
-
     }
 
     /**
@@ -29,6 +27,6 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participants');
+        Schema::dropIfExists('competitions_foreign_keys');
     }
 }
