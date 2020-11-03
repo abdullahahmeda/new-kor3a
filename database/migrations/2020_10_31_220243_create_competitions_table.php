@@ -13,7 +13,7 @@ class CreateCompetitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('competitions', function (Blueprint $table) {
+        Schema::table('competitions', function (Blueprint $table) {
             $table->bigIncrements('id');
             /* $table->integer('week'); */
             $table->integer('day');
