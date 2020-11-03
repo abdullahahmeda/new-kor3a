@@ -13,7 +13,7 @@ class CreateCompetitionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('competitions', function (Blueprint $table) {
+        Schema::create('competitions', function (Blueprint $table) {
             $table->bigIncrements('id');
             /* $table->integer('week'); */
             $table->integer('day');
@@ -28,7 +28,9 @@ class CreateCompetitionsTable extends Migration
             $table->string('status')->default('active');
             $table->string('banner')->nullable();
             $table->timestamps();
+        });
 
+        Schema::table('competitions', function(Blueprint $table) {
             $table->foreign('winner_id')
                 ->references('id')->on('participants')
                 ->onDelete('cascade');

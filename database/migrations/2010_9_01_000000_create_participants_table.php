@@ -18,12 +18,16 @@ class CreateParticipantsTable extends Migration
             $table->string('phone');
             $table->unsignedBigInteger('competition_id');
             $table->timestamps();
+        });
 
+        Schema::table('participants', function (Blueprint $table) {
             $table->foreign('competition_id')
                 ->references('id')
                 ->on('competitions')
                 ->onDelete('cascade');
         });
+
+
     }
 
     /**
