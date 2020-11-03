@@ -110,9 +110,10 @@
 
 @section('additional_js')
     <script>
-        document.getElementById('finish_at').setAttribute('min', new Date().toISOString().split("T")[0]);
+        var tomorrow = new Date( new Date().getTime() + (1000 * 60 * 60 *24) );
+        document.getElementById('finish_at').setAttribute('min', tomorrow.toISOString().split("T")[0]);
         //document.getElementById('week').setAttribute('min', new Date().toISOString().split("T")[0]);
-        document.getElementById('trip_at').setAttribute('min', new Date().toISOString().split("T")[0]);
+        document.getElementById('trip_at').setAttribute('min', tomorrow.toISOString().split("T")[0]);
 
         function setTripMaxDate() {
             document.getElementById('finish_at').setAttribute('max', document.getElementById('trip_at').value);
