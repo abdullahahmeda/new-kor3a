@@ -30,4 +30,20 @@ class Competition extends Model
     public function winner() {
         return $this->belongsTo(Participant::class, 'winner_id');
     }
+
+    public function directionText() {
+        switch ($this->direction) {
+            case 'saudia_yemen':
+              return 'من السعودية إلى اليمن';
+              break;
+            case 'yemen_saudia':
+              return 'من اليمن إلى السعودية';
+              break;
+            case 'in_yemen':
+              return 'داخل المدن اليمنية';
+              break;
+            default:
+              return '';
+          } 
+    }
 }

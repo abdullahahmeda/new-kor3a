@@ -14,7 +14,9 @@
     <div class="">
 
         <div class="bg-white py-6 shadow-sm">
-            <h1 class="text-center font-bold text-2xl"><i class="fas fa-trophy text-yellow-500"></i> قرعة هذا الاسبوع <i class="fas fa-trophy text-yellow-500"></i></h1>
+            <div class="container mx-auto">
+                <h1 class="text-center font-bold text-2xl"><i class="fas fa-trophy text-yellow-500"></i> قرعة هذا الاسبوع <i class="fas fa-trophy text-yellow-500"></i></h1>
+            </div>
         </div>
 
         <div class="container mt-8 mx-auto">
@@ -30,14 +32,19 @@
                 </div>
             @enderror
 
+            <div class="mb-4">
+                <p class="text-center text-gray-900 text-2xl">شارك بقرعة للحصول على تذكرة مجانية أو مخفضة لهذا الاسبوع المخصصة للمغتربين اليمنين بالسعودية</p>
+                <p class="text-center mt-2"><strong>برعاية يمن باص</strong></p>
+            </div>
+
             <div class="bg-green-300 shadow-md p-4 mb-6 rounded-md">
-                <p class="mb-4">
+                {{-- <p class="mb-4">
                     التذاكر المجانية والمخفضة للرحلات من <strong>السعودية</strong> إلى <strong>اليمن</strong>
-                </p>
+                </p> --}}
                 <form action="/" method="GET">
-                    <div class="form-group flex items-center mb-2">
+                    {{-- <div class="form-group flex items-center mb-2">
                         <label for="day" class="block w-24 font-bold">اختر اليوم:</label>
-                        <select name="day" id="day" class="bg-gray-300">
+                        <select name="day" id="day" class="bg-gray-300 text-sm">
                             <option value="" selected>الكل</option>
                             <option value="6" {{ Request::get('day') == '6' ? 'selected' : '' }}>السبت</option>
                             <option value="0" {{ Request::get('day') == '0' ? 'selected' : '' }}>الأحد</option>
@@ -47,10 +54,20 @@
                             <option value="4" {{ Request::get('day') == '4' ? 'selected' : '' }}>الخميس</option>
                             <option value="5" {{ Request::get('day') == '5' ? 'selected' : '' }}>الجمعة</option>
                         </select>
+                    </div> --}}
+
+                    <div class="form-group flex items-center mb-2">
+                        <label for="direction" class="block w-24 font-bold text-blue-800">اتجاه الرحلة:</label>
+                        <select name="direction" id="direction" class="bg-gray-300 text-sm">
+                            <option value="" selected>الكل</option>
+                            <option value="saudia_yemen" {{ Request::get('direction') == 'saudia_yemen' ? 'selected' : '' }}>من السعودية إلى اليمن</option>
+                            <option value="yemen_saudia" {{ Request::get('direction') == 'yemen_saudia' ? 'selected' : '' }}>من اليمن إلى السعودية</option>
+                            <option value="in_yemen" {{ Request::get('direction') == 'in_yemen' ? 'selected' : '' }}>داخل المدن اليمنية</option>
+                        </select>
                     </div>
                     <div class="form-group flex items-center mb-2">
                         <label class="block w-24 font-bold">نوع القرعة:</label>
-                        <div>
+                        <div class="text-sm">
                             <input type="radio" value="" checked name="type" id="all"> <label for="all">الكل</label>
                             <input type="radio" {{ Request::get('type') == 'free' ? 'checked' : '' }} class="mr-2" value="free" id="free" name="type"> <label for="free">مجانية</label>
                             <input type="radio" {{ Request::get('type') == 'discount' ? 'checked' : '' }} class="mr-2" value="discount" id="discount" name="type"> <label for="discount">مخفضة</label>
@@ -81,10 +98,11 @@
 
                     <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-map-marker-alt inline-block ml-1"></i> الرحلة من <strong>{{ $competition->starting_place }}</strong> إلى <strong>{{ $competition->finishing_place }}</strong></p>
                     <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-ticket-alt inline-block ml-1"></i> عدد التذاكر {{ $competition->discount_percentage == 100 ? 'المجانية' : 'المخفضة' }}: <strong>{{ $competition->available_tickets }}</strong></p>
+                    <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-bus inline-block ml-1"></i> الشركة الناقلة: <strong>{{ $competition->transportation_company }}</strong></p>
                     <p class="text-lg items-center text-gray-900"><i class="fas fa-ad inline-block ml-1"></i> الشركة المقدمة: <strong>{{ $competition->sponsor }}</strong></p>
 
                     @if ($competition->banner)
-                        <img src="{{ asset('storage/' . $competition->banner) }}" class="max-h-full mx-auto mt-4 banner" alt="{{ $competition->sponsor }}">
+                        <img src="{{ asset($competition->banner) }}" class="max-h-full mx-auto mt-4 banner" alt="{{ $competition->sponsor }}">
                     @endif
 
                     @if (!$competition->winner_id)
@@ -141,16 +159,25 @@
             <img src="https://fakeimg.pl/300/" alt="الراعي">
         </div>
     </div> --}}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.25.0/luxon.min.js"></script>
     <script>
         function countDown(elm) {
-            var diffTime = Math.abs(new Date(elm.getAttribute('data-start')) - new Date());
+
+            var date = luxon.DateTime.fromSQL(elm.getAttribute('data-start'), { zone: 'Asia/Aden' });
+            var diff = date.diffNow(['hours', 'minutes', 'seconds']);
+
+            elm.querySelector('.seconds').textContent = parseInt(diff.seconds, 10);
+            elm.querySelector('.minutes').textContent = parseInt(diff.minutes, 10);
+            elm.querySelector('.hours').textContent = parseInt(diff.hours, 10);
+
+            /*var diffTime = Math.abs(new Date(elm.getAttribute('data-start')) - new Date());
             var diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
             var diffMinutes = Math.ceil(diffTime / (1000 * 60)) % 60; 
-            var diffSeconds = Math.ceil(diffTime / (1000)) % 60; 
+            var diffSeconds = Math.ceil(diffTime / (1000)) % 60;
+
             elm.querySelector('.seconds').textContent = diffSeconds;
             elm.querySelector('.minutes').textContent = diffMinutes;
-            elm.querySelector('.hours').textContent = diffHours;
+            elm.querySelector('.hours').textContent = diffHours;*/
         }
         document.querySelectorAll('.countdown').forEach(function(elm) {
             countDown(elm);

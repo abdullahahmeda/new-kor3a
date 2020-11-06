@@ -34,6 +34,10 @@ class Kernel extends ConsoleKernel
                 $winner_user = $competition->participants()->inRandomOrder()->first();
                 if ($winner_user != null) {
                     $competition->winner_id = $winner_user->id;
+                    // Send SMS to $competition->result_phone
+                }
+                else {
+                    // Send SMS to $competition->result_phone
                 }
                 $competition->save();
                 // No one participated in it

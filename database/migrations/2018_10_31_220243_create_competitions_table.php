@@ -22,10 +22,14 @@ class CreateCompetitionsTable extends Migration
             $table->integer('discount_percentage')/* ->nullable() */;
             $table->integer('available_tickets');
             $table->unsignedBigInteger('winner_id')->nullable();
+            $table->string('direction');
             $table->string('starting_place');
             $table->string('finishing_place');
             $table->string('sponsor')->nullable();
             $table->string('status')->default('active');
+            $table->string('transportation_company')->nullable();
+            $table->string('booking_link');
+            $table->string('result_phone');
             $table->string('banner')->nullable();
             $table->timestamps();
         });

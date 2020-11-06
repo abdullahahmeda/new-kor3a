@@ -27,6 +27,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::post('admin', 'AdminController@update')->name('admin.admin.update');
 
     Route::get('competitions', 'AdminCompetitionsController@index')->name('admin.competitions.index');
+    Route::get('competitions/{competition}', 'AdminCompetitionsController@show')->name('admin.competitions.show');
     Route::get('competitions/create', 'AdminCompetitionsController@create')->name('admin.competitions.create');
     Route::get('competitions/{competition}/edit', 'AdminCompetitionsController@edit')->name('admin.competitions.edit');
     Route::patch('competitions/{competition}', 'AdminCompetitionsController@update')->name('admin.competitions.update');

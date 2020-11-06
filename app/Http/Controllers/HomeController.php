@@ -32,6 +32,10 @@ class HomeController extends Controller
             $competitions = $competitions->where('day', request('day'));
         }
 
+        if (request('direction')) {
+            $competitions = $competitions->where('direction', request('direction'));
+        }
+
         if (request('type')) {
             if (request('type') == 'free') {
                 $competitions = $competitions->where('discount_percentage', 100);

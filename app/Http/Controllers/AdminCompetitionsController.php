@@ -17,6 +17,11 @@ class AdminCompetitionsController extends Controller
         ]);
     }
 
+    public function show(Competition $competition)
+    {
+        return  view('admin.competitions.show', compact('competition'));
+    }
+
     public function create()
     {
         return view('admin.competitions.create');
@@ -30,16 +35,25 @@ class AdminCompetitionsController extends Controller
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
             'trip_at' => ['required', 'date'],
+            'direction' => ['required'],
             'finish_at' => ['required', 'date', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'sponsor' => ['string', 'required'],
-            'banner' => ['image']
+            'transportation_company' => ['string'],
+            'booking_link' => ['required', 'url'],
+            'result_phone' => ['required'],
+            //'banner' => ['image'],
         ]);
 
-        if (request()->file('banner')) {
-            $file = request()->file('banner')->store('banners');
-            $attributes['banner'] = $file;
+        if (request()->has('banner')) {
+            if (request()->hasFile('banner')) {
+                $file = request()->file('banner')->store('banners');
+                $attributes['banner'] = 'storage/' . $file;
+            }
+            else {
+                $attributes['banner'] = request('banner');
+            }
         }
 
         $attributes['day'] = Carbon::createFromFormat('Y-m-d', request('trip_at'))->dayOfWeek;
@@ -69,16 +83,25 @@ class AdminCompetitionsController extends Controller
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
             'trip_at' => ['required', 'date'],
+            'direction' => ['required'],
             'finish_at' => ['required', 'date', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'sponsor' => ['string', 'required'],
-            'banner' => ['image']
+            'transportation_company' => ['string'],
+            'booking_link' => ['required', 'url'],
+            'result_phone' => ['required']
+            //'banner' => ['image']
         ]);
 
-        if (request()->file('banner')) {
-            $file = request()->file('banner')->store('banners');
-            $attributes['banner'] = $file;
+        if (request()->has('banner')) {
+            if (request()->hasFile('banner')) {
+                $file = request()->file('banner')->store('banners');
+                $attributes['banner'] = 'storage/' . $file;
+            }
+            else {
+                $attributes['banner'] = request('banner');
+            }
         }
 
         $attributes['day'] = Carbon::createFromFormat('Y-m-d', request('trip_at'))->dayOfWeek;
