@@ -26,9 +26,16 @@
                     {{ Session::get('message') }}
                 </div>
             @endif
+            @if ($errors->any())
+
+            @endif
             @error('phone')
                 <div class="alert alert-danger rounded-md p-4 mb-4">
-                    {{ $message }}
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @enderror
 
@@ -133,9 +140,19 @@
                         <p class="font-bold text-xl mb-2">إشترك الآن!</p>
                         <form action="{{ route('participant_competition.store', $competition) }}" method="POST">
                             @csrf
-                            <div class="form-group">
+                            <div class="form-group px-2">
                                 <label>رقم الجوال للمسافر:</label>
-                                <input type="text" class="border shadow-sm px-1 py-1 rounded-sm border-gray-500 mr-1 w-64" name="phone" placeholder="السعودية (+966) أو اليمن (+967)" required>
+                                <div class="flex justify-center mt-2">
+                                    <div class="ml-2">
+                                        <input type="radio" name="phone_country" checked value="+966">
+                                        سعودي
+                                    </div>
+                                    <div class="mr-2">
+                                        <input type="radio" name="phone_country" value="+967">
+                                        يمني
+                                    </div>
+                                </div>
+                                <input type="text" class="border shadow-sm px-1 py-1 rounded-sm border-gray-500 mt-2 w-full" name="phone" placeholder="" required>
                             </div>
                             <button class="bg-green-600 hover:bg-green-700 transition duration-300 px-4 py-2 rounded-md shadow-md hover:shadow-lg mt-2 text-white">إحجز الرحلة</button>
                             <p class="text-xs mt-2">بمشاركتك فأنت توافق على <a href="/terms" target="_blank" class="text-gray-700">الشروط والأحكام</a></p>

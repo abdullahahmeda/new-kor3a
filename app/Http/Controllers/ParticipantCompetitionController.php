@@ -12,10 +12,12 @@ class ParticipantCompetitionController extends Controller
     public function store(Competition $competition)
     {
         request()->validate([
-            'phone' => ['required', 'string', 'regex:/^\+(966|967)[0-9]+$/'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]+$/'],
+            'phone_country' => ['required', Rule::in(['+966', '+967'])]
         ], [
             'phone.regex' => 'الرجاء إدخال رقم جوال سعودي أو يمني صحيح',
-            'phone.required' => 'رقم الجوال إجباري'
+            'phone.required' => 'رقم الجوال إجباري',
+            'phone_country.required' => 'اختيار الدولة إجباري'
         ]);
 
         $duplicate_phones = Competition::where('status', 'active')->get()->map->participants->flatten()->where('phone', request('phone'));
@@ -25,7 +27,7 @@ class ParticipantCompetitionController extends Controller
 
 
         $participant = new Participant();
-        $participant->phone = request('phone');
+        $participant->phone = request('phone_country') .request('phone');
         $participant->competition_id = $competition->id;
 
         $participant->save();
