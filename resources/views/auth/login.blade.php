@@ -13,6 +13,11 @@
     <div class="container mx-auto">
 
         <div class="max-w-sm mx-auto bg-white p-4 mt-24 shadow-md rounded-md">
+
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('img/login.png') }}" alt="تسجيل الدخول">
+            </div>
+
             <form action="/login" method="POST">
                 @csrf
                 <div class="mb-2">

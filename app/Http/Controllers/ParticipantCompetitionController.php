@@ -27,10 +27,39 @@ class ParticipantCompetitionController extends Controller
 
 
         $participant = new Participant();
-        $participant->phone = request('phone_country') .request('phone');
+        $participant->phone = request('phone_country') . request('phone');
         $participant->competition_id = $competition->id;
 
         $participant->save();
+
+        // Send sms
+        $sms_text = 'تم الاشتراك بنجاح في قرعة يمن باص. لتأكيد الاشتراك برجاء حجز الرحلة المناسبة على  https://www.yemenbus.com/trips/order';
+        if (request('phone_country') == '+967') {
+            $client = new \GuzzleHttp\Client();
+            $client->get('http://52.36.50.145:8080/MainServlet', [
+                'query' => [
+                    'orgName' => env('YEMEN_SMS_orgName'),
+                    'userName' => env('YEMEN_SMS_userName'),
+                    'password' => env('YEMEN_SMS_password'),
+                    'mobileNo' => '967' . request('phone'),
+                    'text' => $sms_text,
+                    'coding' => 2,
+                ]
+            ]);
+        }
+        else { // Saudi number
+            $client = new \GuzzleHttp\Client();
+            $client->get('http://52.36.50.145:8080/MainServlet', [
+                'query' => [
+                    'orgName' => env('YEMEN_SMS_orgName'),
+                    'userName' => env('YEMEN_SMS_userName'),
+                    'password' => env('YEMEN_SMS_password'),
+                    'mobileNo' => '966' . request('phone'),
+                    'text' => $sms_text,
+                    'coding' => 2,
+                ]
+            ]);
+        }
 
         return redirect()->route('home')->with('message', 'تم الاشتراك بنجاح')->with('type', 'success');
     }

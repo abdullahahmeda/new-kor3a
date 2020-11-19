@@ -45,7 +45,7 @@ class HomeController extends Controller
             }
         }
 
-        $competitions = $competitions->where('finish_at', '>', now()->subDay())->where(function($query) {
+        $competitions = $competitions->where('finish_at', '>', now()->tz('UTC')->subDay()->format('j/n/Y h:00 A'))->where(function($query) {
             $query->whereNotNull('winner_id')
                 ->orWhere('status', 'active');
         })->orderBy('day')->latest()->get();

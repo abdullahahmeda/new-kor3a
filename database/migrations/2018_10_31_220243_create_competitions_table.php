@@ -15,8 +15,11 @@ class CreateCompetitionsTable extends Migration
     {
         Schema::create('competitions', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             /* $table->integer('week'); */
             $table->integer('day');
+
+            $table->integer('old_ticket_price');
             $table->timestamp('trip_at');
             $table->timestamp('finish_at');
             $table->integer('discount_percentage')/* ->nullable() */;
@@ -26,11 +29,16 @@ class CreateCompetitionsTable extends Migration
             $table->string('starting_place');
             $table->string('finishing_place');
             $table->string('sponsor')->nullable();
-            $table->string('status')->default('active');
+            $table->string('sponsor_banner')->nullable();
+            $table->string('sponsor_url')->nullable();
             $table->string('transportation_company')->nullable();
+            $table->string('transportation_company_banner')->nullable();
+            $table->string('transportation_company_url')->nullable();
+            $table->string('status')->default('active');
             $table->string('booking_link');
             $table->string('result_phone');
-            $table->string('banner')->nullable();
+
+            $table->text('terms')->nullable();
             $table->timestamps();
         });
     }

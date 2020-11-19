@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('additional_css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-PMjWzHVtwxdq7m7GIxBot5vdxUY+5aKP9wpKtvnNBZrVv1srI8tU6xvFMzG8crLNcMj/8Xl/WWmo/oAP/40p1g==" crossorigin="anonymous" />
+@endsection
+
 @section('content_header')
     <h1>إنشاء قرعة</h1>
     <p class="mt-1 text-muted">ملحوظة: جميع الأوقات الآتية بتوقيت اليمن</p>
@@ -7,7 +11,7 @@
 
 @section('content')
 
-    <form method="POST" action="{{ route('admin.competitions.store') }}" class="pb-4" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.competitions.store') }}" class="pb-4 @if ($errors->any()) was-validated @endif" enctype="multipart/form-data">
         @csrf
         {{-- <div class="form-group">
             <label for="type">النوع</label>
@@ -16,6 +20,15 @@
                 <option value="discount">مخفضة</option>
             </select>
         </div> --}}
+        <div class="form-group">
+            <label for="old_ticket_price">سعر التذكرة قبل التخفيض (ريال)</label>
+            <input type="number" class="form-control" id="old_ticket_price" min="1" name="old_ticket_price" value="{{ old('old_ticket_price') }}" required>
+            @error('old_ticket_price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
         <div class="form-group" id="discount_percentage-warapper">
             <label for="discount_percentage">نسبة التخفيض</label>
             <input type="number" class="form-control" id="discount_percentage" min="1" max="100" name="discount_percentage" value="{{ old('discount_percentage') }}" required>
@@ -27,6 +40,10 @@
                     {{ $message }}
                 </div>
             @enderror
+        </div>
+        <div class="form-group">
+            <label for="new_ticket_price">سعر التذكرة بعد التخفيض (ريال)</label>
+            <input type="number" class="form-control" disabled id="new_ticket_price">
         </div>
         <div class="form-group">
             <label for="available_tickets">عدد التذاكر المجانية / المخفضة</label>
@@ -46,7 +63,12 @@
         </div> --}}
         <div class="form-group">
             <label for="trip_at">معاد الرحلة</label>
-            <input type="date" class="form-control" id="trip_at" name="trip_at" onchange="setTripMaxDate()" value="{{ old('trip_at') }}" required>
+            <div class="input-group date" id="trip_at" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" name="trip_at" autocomplete="off" value="{{ old('trip_at') }}" data-target="#trip_at" required>
+                <div class="input-group-append" data-target="#trip_at" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
             @error('trip_at')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -55,9 +77,14 @@
         </div>
         <div class="form-group">
             <label for="finish_at">معاد اختيار الفائز</label>
-            <input type="date" class="form-control" id="finish_at" name="finish_at" value="{{ old('finish_at') }}" required>
+            <div class="input-group date" id="finish_at" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" name="finish_at" autocomplete="off" value="{{ old('finish_at') }}" data-target="#finish_at" required>
+                <div class="input-group-append" data-target="#finish_at" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
             <small>
-                في أول هذا اليوم (منتصف الليل)، سيتم إختيار الفائز
+                سيتم اختيار الفائز في المعاد المحدد
             </small>
             @error('finish_at')
                 <div class="invalid-feedback">
@@ -97,15 +124,6 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="transportation_company">الشركة الناقلة</label>
-            <input type="text" class="form-control" id="transportation_company" name="transportation_company" value="{{ old('transportation_company') }}" required>
-            @error('transportation_company')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
-        <div class="form-group">
             <label for="booking_link">رابط الحجز من يمن باص</label>
             <input type="url" class="form-control" id="booking_link" name="booking_link" value="{{ old('booking_link') }}" required>
             @error('booking_link')
@@ -116,7 +134,7 @@
         </div>
         <div class="form-group">
             <label for="result_phone">الجوال الخاص باستقبال النتائج</label>
-            <input type="text" class="form-control" id="result_phone" name="result_phone" placeholder="مثال: +20101234567" value="{{ old('result_phone') }}" required>
+            <input type="text" class="form-control" id="result_phone" name="result_phone" placeholder="مثال: +967123456789" value="{{ old('result_phone') }}" required>
             @error('result_phone')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -133,58 +151,189 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="banner">بانر الراعي (اختياري)</label>
+            <label for="sponsor_url">رابط الراعي</label>
+            <input type="url" class="form-control" id="sponsor_url" name="sponsor_url" value="{{ old('sponsor_url') }}" required>
+            @error('sponsor_url')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="sponsor_banner">بانر الراعي (اختياري)</label>
             <div class="form-check">
-                <input class="form-check-input banner-type" checked type="radio" onchange="checkBannerType()" name="banner_type" value="banner_image" id="banner_image">
-                <label class="form-check-label mr-4" for="banner_image">
+                <input class="form-check-input sponsor-banner-type" checked type="radio" onchange="checkSponsorBannerType()" name="sponsor_banner_type" value="banner_image" id="sponsor_banner_image">
+                <label class="form-check-label mr-4" for="sponsor_banner_image">
                     ملف
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input banner-type" type="radio" onchange="checkBannerType()" name="banner_type" value="banner_url" id="banner_url">
-                <label class="form-check-label mr-4" for="banner_url">
+                <input class="form-check-input sponsor-banner-type" type="radio" onchange="checkSponsorBannerType()" name="sponsor_banner_type" value="banner_url" id="sponsor_banner_url">
+                <label class="form-check-label mr-4" for="sponsor_banner_url">
                     رابط (صورة)
                 </label>
             </div>
-            <input type="file" class="form-control mt-2" id="banner" name="banner" value="{{ old('banner') }}">
-            @error('banner')
+            <input type="file" class="form-control mt-2" id="sponsor_banner" name="sponsor_banner" value="{{ old('sponsor_banner') }}">
+            @error('sponsor_banner')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="transportation_company">الشركة الناقلة</label>
+            <input type="text" class="form-control" id="transportation_company" name="transportation_company" value="{{ old('transportation_company') }}" required>
+            @error('transportation_company')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="transportation_company_url">رابط الشركة الناقلة</label>
+            <input type="url" class="form-control" id="transportation_company_url" name="transportation_company_url" value="{{ old('transportation_company_url') }}" required>
+            @error('transportation_company_url')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="transportation_company_banner">بانر الشركة الناقلة (اختياري)</label>
+            <div class="form-check">
+                <input class="form-check-input transportation-company-banner-type" checked type="radio" onchange="checkTransportationCompanyBannerType()" name="transportation_company_banner_type" value="banner_image" id="transportation_company_banner_image">
+                <label class="form-check-label mr-4" for="transportation_company_banner_image">
+                    ملف
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input transportation-company-banner-type" type="radio" onchange="checkTransportationCompanyBannerType()" name="transportation_company_banner_type" value="banner_url" id="transportation_company_banner_url">
+                <label class="form-check-label mr-4" for="transportation_company_banner_url">
+                    رابط (صورة)
+                </label>
+            </div>
+            <input type="file" class="form-control mt-2" id="transportation_company_banner" name="transportation_company_banner" value="{{ old('transportation_company_banner') }}">
+            @error('transportation_company_banner')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
         </div>
 
-        <button class="btn btn-success">إنشاء</button>
+        <div class="form-group">
+            <label for="terms">شروط القرعة</label>
+            <textarea class="form-control" id="terms" name="terms">{!! old('terms') !!}</textarea>
+            @error('terms')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-success">إنشاء</button>
     </form>
 @stop
 
 {{-- @section('plugins.Select2', true) --}}
 
 @section('additional_js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.25.0/luxon.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/tjpbupiyuwe4prsrf2f3n06og3iresc0c6e1molx86gpankn/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ar-sa.min.js"></script> --}}
     <script>
+        //moment.locale('ar-sa')
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.25.0/luxon.min.js"></script> --}}
+    <script>
+        $(function () {
+            tinymce.init({
+                selector: '#terms',
+                  toolbar: 'undo redo | bold italic underline strikethrough | fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent | forecolor backcolor casechange removeformat',
+            });
+
+            $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+            icons: {
+                time: 'fas fa-clock',
+                date: 'fas fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-right',
+                next: 'fas fa-chevron-left',
+                today: 'fas fa-calendar-check-o',
+                clear: 'fas fa-trash',
+                close: 'fas fa-times'
+            } });
+
+            var tomorrow = moment().tz('Asia/Aden');
+
+            $('#trip_at').datetimepicker({
+                useCurrent: false,
+                stepping: 60,
+                format: 'D/M/YYYY hh:00 A',
+                timeZone: 'Asia/Aden',
+                minDate: tomorrow
+            });
+            $('#finish_at').datetimepicker({
+                useCurrent: false,
+                stepping: 60,
+                format: 'D/M/YYYY hh:00 A',
+                timeZone: 'Asia/Aden',
+                minDate: tomorrow
+            });
+
+        });
+
+        $("#trip_at").on("change.datetimepicker", function (e) {
+            $('#finish_at').datetimepicker('maxDate', e.date);
+        });
+
         //var tomorrow = new Date( new Date().getTime() + (1000 * 60 * 60 *24) );
         //document.getElementById('week').setAttribute('min', new Date().toISOString().split("T")[0]);
-        var tomorrow = luxon.DateTime.local().setZone('Asia/Aden').plus({ days: 1 });
-        document.getElementById('finish_at').setAttribute('min', tomorrow.toISODate());
+        //var tomorrow = luxon.DateTime.local().setZone('Asia/Aden').plus({ days: 1 });
+        //var tomorrow = .add(1, 'days')
+
+        /*document.getElementById('finish_at').setAttribute('min', tomorrow.toISODate());
         document.getElementById('trip_at').setAttribute('min', tomorrow.toISODate());
 
         function setTripMaxDate() {
             document.getElementById('finish_at').setAttribute('max', document.getElementById('trip_at').value);
         }
-        setTripMaxDate()
+        setTripMaxDate()*/
         
-        function checkBannerType() {
-            var type = $('.banner-type:checked').val();
+        function checkSponsorBannerType() {
+            var type = $('.sponsor-banner-type:checked').val();
 
             if (type === 'banner_image') {
-                $('#banner').attr('type', 'file');
+                $('#sponsor_banner').attr('type', 'file');
             }
             else {
-                $('#banner').attr('type', 'text');
+                $('#sponsor_banner').attr('type', 'text');
             }
         }
-        checkBannerType();
+        checkSponsorBannerType();
+
+        function checkTransportationCompanyBannerType() {
+            var type = $('.transportation-company-banner-type:checked').val();
+
+            if (type === 'banner_image') {
+                $('#transportation_company_banner').attr('type', 'file');
+            }
+            else {
+                $('#transportation_company_banner').attr('type', 'text');
+            }
+        }
+        checkTransportationCompanyBannerType();
+
+        function calculateTicketPrice() {
+            if (isNaN($('#old_ticket_price').val()) || isNaN($('#discount_percentage').val())) {
+                return;
+            }
+            $('#new_ticket_price').val( $('#old_ticket_price').val() * ( ( 100 -  $('#discount_percentage').val() ) / 100 ) )
+        }
+        calculateTicketPrice()
+        $('#discount_percentage, #old_ticket_price').on('keyup', calculateTicketPrice);
 
         /*function checkType() {
             if (document.getElementById('type').value === 'free') {

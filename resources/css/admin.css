@@ -1,6 +1,7 @@
 body {
     direction: rtl;
     text-align: right;
+    font-family: 'Almarai', sans-serif;
 }
 
 .wrapper {
@@ -27,6 +28,10 @@ body {
 
 .main-sidebar, .main-sidebar::before {
     transition: margin-right .3s ease-in-out,width .3s ease-in-out;
+}
+
+.bootstrap-datetimepicker-widget .list-unstyled {
+    padding-right: 0;
 }
 
 @media (min-width: 768px) {

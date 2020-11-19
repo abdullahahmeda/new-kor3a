@@ -31,32 +31,52 @@ class AdminCompetitionsController extends Controller
     {
         $attributes = request()->validate([
             /* 'type' => ['required', 'string', Rule::in(['free', 'discount'])], */
+            'old_ticket_price' => ['required', 'min:1'],
             'discount_percentage' => [/* Rule::requiredIf(request('type') == 'discount') */ 'required', 'integer', 'min:1', 'max:100'],
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
-            'trip_at' => ['required', 'date'],
+            'trip_at' => ['required', 'date_format:j/n/Y h:00 A'],
             'direction' => ['required'],
-            'finish_at' => ['required', 'date', 'before_or_equal:' . request('trip_at')],
+            'finish_at' => ['required', 'date_format:j/n/Y h:00 A', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
-            'sponsor' => ['string', 'required'],
-            'transportation_company' => ['string'],
             'booking_link' => ['required', 'url'],
             'result_phone' => ['required'],
+            'sponsor' => ['string', 'required'],
+            'sponsor_url' => ['url'],
+            'transportation_company' => ['string'],
+            'transportation_company_url' => ['url'],
+            'terms' => ['string'],
+            'transportation_company_banner' => ['image'],
+            'sponsor_banner' => ['image'],
             //'banner' => ['image'],
         ]);
 
-        if (request()->has('banner')) {
-            if (request()->hasFile('banner')) {
-                $file = request()->file('banner')->store('banners');
-                $attributes['banner'] = 'storage/' . $file;
+        if (request()->has('sponsor_banner')) {
+            if (request()->hasFile('sponsor_banner')) {
+                $file = request()->file('sponsor_banner')->store('banners/sponsors');
+                $attributes['sponsor_banner'] = 'storage/' . $file;
             }
             else {
-                $attributes['banner'] = request('banner');
+                $attributes['sponsor_banner'] = request('sponsor_banner');
+            }
+        }
+        if (request()->has('transportation_company_banner')) {
+            if (request()->hasFile('transportation_company_banner')) {
+                $file = request()->file('transportation_company_banner')->store('banners/transportation-companies');
+                $attributes['transportation_company_banner'] = 'storage/' . $file;
+            }
+            else {
+                $attributes['transportation_company_banner'] = request('banner');
             }
         }
 
-        $attributes['day'] = Carbon::createFromFormat('Y-m-d', request('trip_at'))->dayOfWeek;
+        $attributes['day'] = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden')->dayOfWeek;
+        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden');
+        $attributes['trip_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+
+        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('finish_at'), 'Asia/Aden');
+        $attributes['finish_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
 
         /* $BASE_YEAR = 2020;
 
@@ -79,32 +99,52 @@ class AdminCompetitionsController extends Controller
     {
         $attributes = request()->validate([
             /* 'type' => ['required', 'string', Rule::in(['free', 'discount'])], */
+            'old_ticket_price' => ['required', 'min:1'],
             'discount_percentage' => [/* Rule::requiredIf(request('type') == 'discount') */ 'required', 'integer', 'min:1', 'max:100'],
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
-            'trip_at' => ['required', 'date'],
+            'trip_at' => ['date_format:j/n/Y h:00 A'],
             'direction' => ['required'],
-            'finish_at' => ['required', 'date', 'before_or_equal:' . request('trip_at')],
+            'finish_at' => ['date_format:j/n/Y h:00 A', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
-            'sponsor' => ['string', 'required'],
-            'transportation_company' => ['string'],
             'booking_link' => ['required', 'url'],
-            'result_phone' => ['required']
-            //'banner' => ['image']
+            'result_phone' => ['required'],
+            'sponsor' => ['string', 'required'],
+            'sponsor_url' => ['url'],
+            'transportation_company' => ['string'],
+            'transportation_company_url' => ['url'],
+            'terms' => ['string'],
+            'transportation_company_banner' => ['image'],
+            'sponsor_banner' => ['image'],
+            //'banner' => ['image'],
         ]);
 
-        if (request()->has('banner')) {
-            if (request()->hasFile('banner')) {
-                $file = request()->file('banner')->store('banners');
-                $attributes['banner'] = 'storage/' . $file;
+        if (request()->has('sponsor_banner')) {
+            if (request()->hasFile('sponsor_banner')) {
+                $file = request()->file('sponsor_banner')->store('banners/sponsors');
+                $attributes['sponsor_banner'] = 'storage/' . $file;
             }
             else {
-                $attributes['banner'] = request('banner');
+                $attributes['sponsor_banner'] = request('sponsor_banner');
+            }
+        }
+        if (request()->has('transportation_company_banner')) {
+            if (request()->hasFile('transportation_company_banner')) {
+                $file = request()->file('transportation_company_banner')->store('banners/transportation-companies');
+                $attributes['transportation_company_banner'] = 'storage/' . $file;
+            }
+            else {
+                $attributes['transportation_company_banner'] = request('banner');
             }
         }
 
-        $attributes['day'] = Carbon::createFromFormat('Y-m-d', request('trip_at'))->dayOfWeek;
+        $attributes['day'] = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden')->dayOfWeek;
+        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden');
+        $attributes['trip_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+
+        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('finish_at'), 'Asia/Aden');
+        $attributes['finish_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
 
         $competition->update($attributes);
 

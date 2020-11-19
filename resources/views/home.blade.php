@@ -15,11 +15,13 @@
 
         <div class="bg-white py-6 shadow-sm">
             <div class="container mx-auto">
-                <h1 class="text-center font-bold text-2xl"><i class="fas fa-trophy text-yellow-500"></i> قرعة هذا الاسبوع <i class="fas fa-trophy text-yellow-500"></i></h1>
+                <h1 class="text-center font-bold text-2xl"><a class="text-blue-700 hover:text-blue-900" href="https://www.yemenbus.com">يمن باص YemenBus</a></h1>
+                <p class="text-md text-center font-bold">الشبكة الذكية للحجوزات المغتربين اليمنين بالسعودية</p>
+                <p class="text-xs text-gray-800 text-center mt-4">رحلات الباصات - رحلات طيران - انجاز المعاملات التاشيرات بالسفارة السعودية باليمن - تسجيل الحجاج - تسجيل المعتمرين - تسجيل الطلاب المغتربين بالجامعات والمعاهد اليمنية - التأمين الصحي للسفر</p>
             </div>
         </div>
 
-        <div class="container mt-8 mx-auto">
+        <div class="container mt-4 mx-auto">
 
             @if (Session::has('message'))
                 <div class="alert alert-{{ Session::get('type', 'default') }} rounded-md p-4 mb-4">
@@ -40,16 +42,18 @@
             @enderror
 
             <div class="mb-4">
-                <p class="text-center text-gray-900 text-2xl">شارك بقرعة للحصول على تذكرة مجانية أو مخفضة لهذا الاسبوع المخصصة للمغتربين اليمنين بالسعودية</p>
+                <p class="text-center text-gray-900 font-bold text-2xl"><i class="fas fa-trophy text-yellow-500"></i> قرعة هذا الاسبوع <i class="fas fa-trophy text-yellow-500"></i></p>
+                <p class="text-center text-gray-900 text-2xl mt-2">شارك بقرعة للحصول على تذكرة مجانية أو مخفضة لهذا الاسبوع المخصصة للمغتربين اليمنيين بالسعودية</p>
                 <p class="text-center mt-2"><strong>برعاية يمن باص</strong></p>
             </div>
 
             <div class="bg-green-300 shadow-md p-4 mb-6 rounded-md">
+                <p class="mb-2">ابحث عن القرعة المناسبة لك</p>
                 {{-- <p class="mb-4">
                     التذاكر المجانية والمخفضة للرحلات من <strong>السعودية</strong> إلى <strong>اليمن</strong>
                 </p> --}}
                 <form action="/" method="GET">
-                    {{-- <div class="form-group flex items-center mb-2">
+                    <div class="form-group flex items-center mb-2">
                         <label for="day" class="block w-24 font-bold">اختر اليوم:</label>
                         <select name="day" id="day" class="bg-gray-300 text-sm">
                             <option value="" selected>الكل</option>
@@ -61,7 +65,7 @@
                             <option value="4" {{ Request::get('day') == '4' ? 'selected' : '' }}>الخميس</option>
                             <option value="5" {{ Request::get('day') == '5' ? 'selected' : '' }}>الجمعة</option>
                         </select>
-                    </div> --}}
+                    </div>
 
                     <div class="form-group flex items-center mb-2">
                         <label for="direction" class="block w-24 font-bold text-blue-800">اتجاه الرحلة:</label>
@@ -89,9 +93,9 @@
             @forelse ($competitions as $competition)
 
                 <div class="bg-white shadow-md p-4 rounded-md mb-4">
-                    <div class="flex justify-between items-center mb-1">
+                    <div class="flex justify-between items-center mb-2">
                         <p class="text-lg items-center text-gray-900">
-                            <i class="fas fa-clock inline-block ml-1"></i> 
+                            <i class="fas fa-clock inline-block ml-2"></i> 
                             الرحلة يوم: <strong>{{ $competition->tripDate() }}</strong>
                         </p>
                         <div class="badge badge-{{ $competition->discount_percentage == 100 ? 'free' : 'discount' }} inline-block rounded-md mr-1 text-xs px-2 py-2 text-white">
@@ -99,17 +103,21 @@
                         </div>
                     </div>
 
-                    @if ($competition->discount_percentage < 100)
-                        <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-tags inline-block ml-1"></i> نسبة التخفيض: <strong>{{ $competition->discount_percentage }}%</strong></p>
+                    <p class="text-lg items-center mb-2 text-gray-900"><i class="fas fa-tags inline-block ml-1"></i> سعر التذكرة قبل الخصم: <strong>{{ $competition->old_ticket_price }} ريال</strong></p>
+                    <p class="text-lg items-center mb-2 text-gray-900"><i class="fas fa-percent inline-block ml-1"></i> نسبة التخفيض: <strong>{{ $competition->discount_percentage }}%</strong></p>
+                    <p class="text-lg items-center mb-2 text-gray-900"><i class="fas fa-tags inline-block ml-1"></i> سعر التذكرة بعد الخصم: <strong>{{ $competition->old_ticket_price * ( (100 - $competition->discount_percentage) / 100 ) }} ريال (سيتم توفير {{ $competition->old_ticket_price * $competition->discount_percentage / 100 }} ريال)</strong></p>
+                    <p class="text-lg items-center mb-2 text-gray-900"><i class="fas fa-map-marker-alt inline-block ml-1"></i> الرحلة من <strong>{{ $competition->starting_place }}</strong> إلى <strong>{{ $competition->finishing_place }}</strong></p>
+                    <p class="text-lg items-center mb-2 text-gray-900"><i class="fas fa-ticket-alt inline-block ml-1"></i> عدد التذاكر {{ $competition->discount_percentage == 100 ? 'المجانية' : 'المخفضة' }}: <strong>{{ $competition->available_tickets }}</strong></p>
+                    <p class="text-lg items-center text-center mb-2 text-gray-900"><i class="fas fa-bus inline-block ml-1"></i> الشركة الناقلة: {!! $competition->transportation_company_url ? "<a class=\"text-blue-700 hover:text-blue-900\" href=\"{$competition->transportation_company_url}\"><strong>{$competition->transportation_company}</strong></a>" : "<strong>{$competition->transportation_company}</strong>" !!}</p>
+                    
+                    @if ($competition->transportation_company_banner)
+                        <a href="{{ $competition->transportation_company_url }}"><img src="{{ asset($competition->transportation_company_banner) }}" loading="lazy" class="max-h-full mx-auto mt-4 banner" alt="{{ $competition->transportation_company_banner }}"></a>
                     @endif
 
-                    <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-map-marker-alt inline-block ml-1"></i> الرحلة من <strong>{{ $competition->starting_place }}</strong> إلى <strong>{{ $competition->finishing_place }}</strong></p>
-                    <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-ticket-alt inline-block ml-1"></i> عدد التذاكر {{ $competition->discount_percentage == 100 ? 'المجانية' : 'المخفضة' }}: <strong>{{ $competition->available_tickets }}</strong></p>
-                    <p class="text-lg items-center mb-1 text-gray-900"><i class="fas fa-bus inline-block ml-1"></i> الشركة الناقلة: <strong>{{ $competition->transportation_company }}</strong></p>
-                    <p class="text-lg items-center text-gray-900"><i class="fas fa-ad inline-block ml-1"></i> الشركة المقدمة: <strong>{{ $competition->sponsor }}</strong></p>
+                    <p class="text-lg items-center text-center mt-2 text-gray-900"><i class="fas fa-ad inline-block ml-1"></i> الشركة المقدمة: {!! $competition->sponsor_url ? "<a class=\"text-blue-700 hover:text-blue-900\" href=\"{$competition->sponsor_url}\"><strong>{$competition->sponsor}</strong></a>" : "<strong>{$competition->sponsor}</strong>" !!}</p>
 
-                    @if ($competition->banner)
-                        <img src="{{ asset($competition->banner) }}" class="max-h-full mx-auto mt-4 banner" alt="{{ $competition->sponsor }}">
+                    @if ($competition->sponsor_banner)
+                        <a href="{{ $competition->sponsor_url }}"><img src="{{ asset($competition->sponsor_banner) }}" loading="lazy" class="max-h-full mx-auto mt-4 banner" alt="{{ $competition->sponsor_banner }}"></a>
                     @endif
 
                     @if (!$competition->winner_id)
@@ -144,22 +152,26 @@
                                 <label>رقم الجوال للمسافر:</label>
                                 <div class="flex justify-center mt-2">
                                     <div class="ml-2">
-                                        <input type="radio" name="phone_country" checked value="+966">
-                                        سعودي
+                                        <input type="radio" name="phone_country" id="sa_{{ $competition->id }}" checked value="+966">
+                                        <label for="sa_{{ $competition->id }}">سعودي</label>
                                     </div>
                                     <div class="mr-2">
-                                        <input type="radio" name="phone_country" value="+967">
-                                        يمني
+                                        <input type="radio" name="phone_country" id="ye_{{ $competition->id }}" value="+967">
+                                        <label for="ye_{{ $competition->id }}">يمني</label>
                                     </div>
                                 </div>
                                 <input type="text" class="border shadow-sm px-1 py-1 rounded-sm border-gray-500 mt-2 w-full" name="phone" placeholder="" required>
                             </div>
-                            <button class="bg-green-600 hover:bg-green-700 transition duration-300 px-4 py-2 rounded-md shadow-md hover:shadow-lg mt-2 text-white">إحجز الرحلة</button>
-                            <p class="text-xs mt-2">بمشاركتك فأنت توافق على <a href="/terms" target="_blank" class="text-gray-700">الشروط والأحكام</a></p>
+                            <button class="bg-green-600 hover:bg-green-700 transition duration-300 px-4 py-2 rounded-md shadow-md hover:shadow-lg mt-2 text-white">احجز الرحلة</button>
+                            <p class="text-xs mt-2">بمشاركتك فأنت توافق على الشروط والأحكام</p>
                         </form>
                         @endif
                     </div>
 
+                    <p class="mt-4">الشروط والأحكام</p>
+                    <div class="border mt-1 border-gray-500 p-2 rounded-sm">
+                        {!! $competition->terms !!}
+                    </div>
                 </div>
 
             @empty
@@ -180,7 +192,7 @@
     <script>
         function countDown(elm) {
 
-            var date = luxon.DateTime.fromSQL(elm.getAttribute('data-start'), { zone: 'Asia/Aden' });
+            var date = luxon.DateTime.fromFormat(elm.getAttribute('data-start'), 'd/M/yyyy hh:00 a', { zone: 'UTC' });
             var diff = date.diffNow(['hours', 'minutes', 'seconds']);
 
             elm.querySelector('.seconds').textContent = parseInt(diff.seconds, 10);
