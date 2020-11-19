@@ -13,13 +13,13 @@ class Competition extends Model
     public function tripDate()
     {
         Carbon::setlocale('ar');
-        return Carbon::createFromFormat('j/n/Y h:00 a', $this->trip_at)->isoFormat('dddd [الموافق] D-M-YYYY');
+        return Carbon::parse($this->trip_at)->isoFormat('dddd [الموافق] D-M-YYYY');
     }
 
     public function finishDate()
     {
         Carbon::setlocale('ar');
-        return Carbon::createFromFormat('j/n/Y h:00 a', $this->finish_at)->isoFormat('dddd [الموافق] D-M-YYYY');
+        return Carbon::createFromFormat($this->finish_at)->isoFormat('dddd [الموافق] D-M-YYYY');
     }
 
     public function participants()

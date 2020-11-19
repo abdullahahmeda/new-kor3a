@@ -7,6 +7,9 @@
 @section('content_header')
     <h1>إنشاء قرعة</h1>
     <p class="mt-1 text-muted">ملحوظة: جميع الأوقات الآتية بتوقيت اليمن</p>
+    @foreach ($errors->all() as $message)
+        <p>{{ $message }}</p>
+    @endforeach
 @stop
 
 @section('content')
@@ -64,7 +67,7 @@
         <div class="form-group">
             <label for="trip_at">معاد الرحلة</label>
             <div class="input-group date" id="trip_at" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" name="trip_at" autocomplete="off" value="{{ old('trip_at') }}" data-target="#trip_at" required>
+                <input type="text" class="form-control datetimepicker-input" name="trip_at" autocomplete="off" data-target="#trip_at" required>
                 <div class="input-group-append" data-target="#trip_at" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
@@ -78,7 +81,7 @@
         <div class="form-group">
             <label for="finish_at">معاد اختيار الفائز</label>
             <div class="input-group date" id="finish_at" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" name="finish_at" autocomplete="off" value="{{ old('finish_at') }}" data-target="#finish_at" required>
+                <input type="text" class="form-control datetimepicker-input" name="finish_at" autocomplete="off" data-target="#finish_at" required>
                 <div class="input-group-append" data-target="#finish_at" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
@@ -271,17 +274,20 @@
             $('#trip_at').datetimepicker({
                 useCurrent: false,
                 stepping: 60,
-                format: 'D/M/YYYY hh:00 A',
+                format: 'YYYY-MM-DD HH:00:00',
                 timeZone: 'Asia/Aden',
                 minDate: tomorrow
             });
             $('#finish_at').datetimepicker({
                 useCurrent: false,
                 stepping: 60,
-                format: 'D/M/YYYY hh:00 A',
+                format: 'YYYY-MM-DD HH:00:00',
                 timeZone: 'Asia/Aden',
                 minDate: tomorrow
             });
+
+            $('#trip_at').datetimepicker('date', "{{ old('trip_at') }}")
+            $('#finish_at').datetimepicker('date', "{{ old('finish_at')}}")
 
         });
 

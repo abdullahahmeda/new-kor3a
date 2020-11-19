@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->call(function() {
-            $competitions = Competition::where('status', 'active')->where('finish_at', '<=', now()->format('j/n/Y h:00 A'))->get();
+            $competitions = Competition::where('status', 'active')->where('finish_at', '<=', now())->get();
             foreach ($competitions as $competition) {
                 $competition->status = 'finished';
                 $winner_user = $competition->participants()->inRandomOrder()->first();

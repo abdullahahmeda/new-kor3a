@@ -272,7 +272,7 @@
             $('#trip_at').datetimepicker({
                 useCurrent: false,
                 stepping: 60,
-                format: 'D/M/YYYY hh:00 A',
+                format: 'YYYY-MM-DD HH:00:00',
                 timeZone: 'Asia/Aden',
                 minDate: tomorrow
             });
@@ -280,7 +280,7 @@
             $('#finish_at').datetimepicker({
                 useCurrent: false,
                 stepping: 60,
-                format: 'D/M/YYYY hh:00 A',
+                format: 'YYYY-MM-DD HH:00:00',
                 timeZone: 'Asia/Aden',
                 minDate: tomorrow
             });

@@ -25,11 +25,11 @@
         </div>
         <div class="form-group">
             <label for="trip_at">معاد الرحلة</label>
-            <input type="text" class="form-control-plaintext" readonly id="trip_at" onchange="setTripMaxDate()" value="{{ \Carbon\Carbon::createFromFormat('j/n/Y h:00 A', $competition->trip_at, 'UTC')->tz('Asia/Aden')->format('j/n/Y h:00 A') }}" required>
+            <input type="text" class="form-control-plaintext" readonly id="trip_at" onchange="setTripMaxDate()" value="{{ $competition->trip_at }}" required>
         </div>
         <div class="form-group">
             <label for="finish_at">معاد اختيار الفائز</label>
-            <input type="text" class="form-control-plaintext" readonly id="finish_at" value="{{ \Carbon\Carbon::createFromFormat('j/n/Y h:00 A', $competition->finish_at, 'UTC')->tz('Asia/Aden')->format('j/n/Y h:00 A') }}" required>
+            <input type="text" class="form-control-plaintext" readonly id="finish_at" value="{{ $competition->finish_at }}" required>
         </div>
         <div class="form-group">
             <label for="direction">اتجاه الرحلة</label>

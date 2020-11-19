@@ -35,9 +35,9 @@ class AdminCompetitionsController extends Controller
             'discount_percentage' => [/* Rule::requiredIf(request('type') == 'discount') */ 'required', 'integer', 'min:1', 'max:100'],
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
-            'trip_at' => ['required', 'date_format:j/n/Y h:00 A'],
+            'trip_at' => ['required', 'date'],
             'direction' => ['required'],
-            'finish_at' => ['required', 'date_format:j/n/Y h:00 A', 'before_or_equal:' . request('trip_at')],
+            'finish_at' => ['required', 'date', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'booking_link' => ['required', 'url'],
@@ -67,16 +67,16 @@ class AdminCompetitionsController extends Controller
                 $attributes['transportation_company_banner'] = 'storage/' . $file;
             }
             else {
-                $attributes['transportation_company_banner'] = request('banner');
+                $attributes['transportation_company_banner'] = request('transportation_company_banner');
             }
         }
 
-        $attributes['day'] = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden')->dayOfWeek;
-        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden');
-        $attributes['trip_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+        $attributes['day'] = Carbon::createFromFormat('Y-m-d H:00:00', request('trip_at'), 'Asia/Aden')->dayOfWeek;
+        $date = Carbon::createFromFormat('Y-m-d H:00:00', request('trip_at'), 'Asia/Aden');
+        $attributes['trip_at'] = $date->tz('UTC')->format('Y-m-d H:00:00');
 
-        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('finish_at'), 'Asia/Aden');
-        $attributes['finish_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+        $date = Carbon::createFromFormat('Y-m-d H:00:00', request('finish_at'), 'Asia/Aden');
+        $attributes['finish_at'] = $date->tz('UTC')->format('Y-m-d H:00:00');
 
         /* $BASE_YEAR = 2020;
 
@@ -103,9 +103,9 @@ class AdminCompetitionsController extends Controller
             'discount_percentage' => [/* Rule::requiredIf(request('type') == 'discount') */ 'required', 'integer', 'min:1', 'max:100'],
             /* 'week' => ['required', 'date'], */
             'available_tickets' => ['required', 'numeric'],
-            'trip_at' => ['date_format:j/n/Y h:00 A'],
+            'trip_at' => ['date_format:Y-m-d H:00:00'],
             'direction' => ['required'],
-            'finish_at' => ['date_format:j/n/Y h:00 A', 'before_or_equal:' . request('trip_at')],
+            'finish_at' => ['date_format:Y-m-d H:00:00', 'before_or_equal:' . request('trip_at')],
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'booking_link' => ['required', 'url'],
@@ -135,16 +135,16 @@ class AdminCompetitionsController extends Controller
                 $attributes['transportation_company_banner'] = 'storage/' . $file;
             }
             else {
-                $attributes['transportation_company_banner'] = request('banner');
+                $attributes['transportation_company_banner'] = request('transportation_company_banner');
             }
         }
 
-        $attributes['day'] = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden')->dayOfWeek;
-        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('trip_at'), 'Asia/Aden');
-        $attributes['trip_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+        $attributes['day'] = Carbon::createFromFormat('Y-m-d H:00:00', request('trip_at'), 'Asia/Aden')->dayOfWeek;
+        $date = Carbon::createFromFormat('Y-m-d H:00:00', request('trip_at'), 'Asia/Aden');
+        $attributes['trip_at'] = $date->tz('UTC')->format('Y-m-d H:00:00');
 
-        $date = Carbon::createFromFormat('j/n/Y h:00 A', request('finish_at'), 'Asia/Aden');
-        $attributes['finish_at'] = $date->tz('UTC')->format('j/n/Y h:00 A');
+        $date = Carbon::createFromFormat('Y-m-d H:00:00', request('finish_at'), 'Asia/Aden');
+        $attributes['finish_at'] = $date->tz('UTC')->format('Y-m-d H:00:00');
 
         $competition->update($attributes);
 

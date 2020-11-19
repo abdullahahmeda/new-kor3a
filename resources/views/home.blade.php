@@ -192,7 +192,7 @@
     <script>
         function countDown(elm) {
 
-            var date = luxon.DateTime.fromFormat(elm.getAttribute('data-start'), 'd/M/yyyy hh:00 a', { zone: 'UTC' });
+            var date = luxon.DateTime.fromSQL(elm.getAttribute('data-start'), { zone: 'UTC' });
             var diff = date.diffNow(['hours', 'minutes', 'seconds']);
 
             elm.querySelector('.seconds').textContent = parseInt(diff.seconds, 10);
