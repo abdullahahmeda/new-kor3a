@@ -16,7 +16,7 @@
         <div class="bg-white py-6 shadow-sm">
             <div class="container mx-auto">
                 <h1 class="text-center font-bold text-2xl"><a class="text-blue-700 hover:text-blue-900" href="https://www.yemenbus.com">يمن باص YemenBus</a></h1>
-                <p class="text-md text-center font-bold">الشبكة الذكية للحجوزات المغتربين اليمنين بالسعودية</p>
+                <p class="text-md text-center font-bold">الشبكة الذكية لحجوزات المغتربين اليمنين بالسعودية</p>
                 <p class="text-xs text-gray-800 text-center mt-4">رحلات الباصات - رحلات طيران - انجاز المعاملات التاشيرات بالسفارة السعودية باليمن - تسجيل الحجاج - تسجيل المعتمرين - تسجيل الطلاب المغتربين بالجامعات والمعاهد اليمنية - التأمين الصحي للسفر</p>
             </div>
         </div>
@@ -168,10 +168,16 @@
                         @endif
                     </div>
 
-                    <p class="mt-4">الشروط والأحكام</p>
-                    <div class="border mt-1 border-gray-500 p-2 rounded-sm">
-                        {!! $competition->terms !!}
-                    </div>
+                    <div class="mt-4 rounded-md overflow-hidden">
+                        <div class="accordion-head cursor-pointer flex p-4 bg-gray-200 items-center justify-between" onclick="toggleAccordion(this)">
+                            <p class="">الشروط والأحكام</p>
+                            <i class="transform fas transition-transform duration-300 fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-body px-4 bg-gray-300 rounded-sm">
+                            {!! $competition->terms !!}
+                        </div>
+                    </div >
+                    
                 </div>
 
             @empty
@@ -192,7 +198,7 @@
     <script>
         function countDown(elm) {
 
-            var date = luxon.DateTime.fromSQL(elm.getAttribute('data-start'), { zone: 'UTC' });
+            var date = luxon.DateTime.fromSQL(elm.getAttribute('data-start'), { zone: 'Asia/Aden' });
             var diff = date.diffNow(['hours', 'minutes', 'seconds']);
 
             elm.querySelector('.seconds').textContent = parseInt(diff.seconds, 10);
@@ -214,6 +220,16 @@
                 countDown(elm);
             }, 1000)
         })
+
+        function toggleAccordion(elm) {
+            elm.querySelector('.fa-chevron-down').classList.toggle('rotate-180')
+            var nextElm = elm.nextElementSibling
+            if (nextElm.clientHeight === 0) {
+                nextElm.style.height = nextElm.scrollHeight + 'px';
+                return;
+            }
+            nextElm.style.height = 0;
+        }
     </script>
 </body>
 </html>

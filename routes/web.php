@@ -34,6 +34,9 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::delete('competitions/{competition}', 'AdminCompetitionsController@destroy')->name('admin.competitions.destroy');
     Route::get('competitions/{competition}', 'AdminCompetitionsController@show')->name('admin.competitions.show');
 
+    Route::get('marketers/create', 'AdminMarketersController@create');
+    Route::get('providers/create', 'AdminProvidersController@create');
+
     Route::get('participants', 'AdminParticipantController@index')->name('admin.participants.index');
     Route::get('participants/create', 'AdminParticipantController@create')->name('admin.participants.create');
     Route::delete('participants/{participant}', 'AdminParticipantController@destroy')->name('admin.participants.destroy');

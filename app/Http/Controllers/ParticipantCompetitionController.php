@@ -33,7 +33,7 @@ class ParticipantCompetitionController extends Controller
         $participant->save();
 
         // Send sms
-        $sms_text = 'تم الاشتراك بنجاح في قرعة يمن باص. لتأكيد الاشتراك برجاء حجز الرحلة المناسبة على  https://www.yemenbus.com/trips/order';
+        $sms_text = 'تم الاشتراك بنجاح في قرعة يمن باص. لتأكيد الاشتراك برجاء حجز الرحلة المناسبة على ' . $competition->booking_link;
         if (request('phone_country') == '+967') {
             $client = new \GuzzleHttp\Client();
             $client->get('http://52.36.50.145:8080/MainServlet', [

@@ -36,3 +36,8 @@ body {
 .banner {
     max-height: 200px;
 }
+
+.accordion-body {
+    height: 0;
+    transition: height .3s;
+}

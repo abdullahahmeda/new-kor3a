@@ -22,6 +22,16 @@ class Competition extends Model
         return Carbon::createFromFormat($this->finish_at)->isoFormat('dddd [الموافق] D-M-YYYY');
     }
 
+    public function getTripAtAttribute($value)
+    {
+        return Carbon::parse($value)->tz('Asia/Aden')->format('Y-m-d H:00:00');
+    }
+
+    public function getFinishAtAttribute($value)
+    {
+        return Carbon::parse($value)->tz('Asia/Aden')->format('Y-m-d H:00:00');
+    }
+
     public function participants()
     {
         return $this->hasMany(Participant::class);

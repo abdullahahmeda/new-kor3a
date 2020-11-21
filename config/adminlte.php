@@ -323,7 +323,16 @@ return [
         [
             'text'      => 'القرع',
             'icon'      => 'fas fa-trophy',
-            'url'       => 'admin/competitions'
+            'submenu' => [
+                [
+                    'text'      => 'كل القرع',
+                    'url'       => 'admin/competitions'
+                ],
+                [
+                    'text'      => 'إنشاء قرعة',
+                    'url'       => 'admin/competitions/create'
+                ]
+            ]
         ],
         [
             'text'      => 'المشاركين',
@@ -331,8 +340,29 @@ return [
             'url'       => 'admin/participants'
         ],
         [
-            'text'      => 'إعدادات الأدمن',
+            'text'      => 'المسوقون',
             'icon'      => 'fas fa-user',
+            'submenu'   => [
+                [
+                    'text'      => 'إضافة مسوق',
+                    'url'       => 'admin/marketers/create',
+                ]
+            ]
+
+        ],
+        [
+            'text'      => 'مقدمو الخدمات',
+            'icon'      => 'fas fa-user',
+            'submenu'   => [
+                [
+                    'text'      => 'إضافة مقدم خدمة',
+                    'url'       => 'admin/providers/create'
+                ]
+            ]
+        ],
+        [
+            'text'      => 'إعدادات الأدمن',
+            'icon'      => 'fas fa-cog',
             'url'       => 'admin/admin'
         ],
         /* [

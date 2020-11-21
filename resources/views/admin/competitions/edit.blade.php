@@ -6,9 +6,7 @@
 
 @section('content_header')
     <h1>تعديل قرعة</h1>
-    @foreach ($errors->all() as $message)
-        <p>{{ $message }}</p>
-    @endforeach
+    <p class="mt-1 text-muted">ملحوظة: جميع الأوقات الآتية بتوقيت اليمن</p>
 @stop
 
 @section('content')
