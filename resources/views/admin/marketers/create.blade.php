@@ -92,14 +92,14 @@
         <div class="form-group">
             <label for="">المزودين ( شركة النقل) المفوض بها عليهم</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="provider" value="global">
-                <label class="form-check-label mr-4" for="exampleRadios1">
+                <input class="form-check-input" type="radio" name="provider" id="provider_global" value="global">
+                <label class="form-check-label mr-4" for="provider_global">
                     عام
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="provider" value="specific">
-                <label class="form-check-label mr-4 d-inline-block" for="exampleRadios1">
+                <input class="form-check-input" type="radio" name="provider" id="provider_specific" value="specific">
+                <label class="form-check-label mr-4 d-inline-block" for="provider_specific">
                     محدد لشركة <input type="text" class="form-control" placeholder="اسم الشركة">
                 </label>
             </div>
