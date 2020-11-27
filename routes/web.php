@@ -44,6 +44,7 @@ Route::prefix('dashboard')->middleware('admin')->group(function() {
     Route::get('marketers/archive', 'MarketersController@archive');
     Route::get('marketers/charge', 'MarketersController@charge');
     Route::get('marketers/settings', 'MarketersController@settings');
+    Route::get('marketers/sms', 'MarketersController@sms')->name('dashboard.marketers.sms');
 
     Route::get('reservations/confirm', 'ReservationsController@confirm')->name('dashboard.reservations.confirm');
     Route::get('reservations/postpone', 'ReservationsController@postpone')->name('dashboard.reservations.postpone');

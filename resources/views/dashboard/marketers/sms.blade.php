@@ -27,15 +27,14 @@
             <input type="number" min="1" class="form-control" id="amount" name="amount" required>
         </div>
         <div class="form-group mt-2">
-            <label for="postpone_to">التأجيل إلى تاريخ</label>
-            <input type="date" class="form-control" name="postpone_to" id="postpone_to" required>
-                
+            <label for="subject">موضوع الرسالة</label>
+            <input type="text" class="form-control" name="subject" id="subject" required>
         </div>
         <div class="form-group mt-2">
-            <label for="notes">ملاحظات</label>
-            <textarea class="form-control" name="notes"></textarea>
+            <label for="message">الرسالة</label>
+            <textarea class="form-control" id="message" name="message"></textarea>
         </div>
-        <button class="btn btn-warning">طلب تأجيل الحجز</button>
+        <button class="btn btn-info">أرسل الرسالة</button>
     </form>
 @stop
 

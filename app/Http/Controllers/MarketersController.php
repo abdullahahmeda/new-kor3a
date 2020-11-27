@@ -26,4 +26,8 @@ class MarketersController extends Controller
     {
         return view('dashboard.marketers.settings');
     }
+    public function sms()
+    {
+        return view('dashboard.marketers.sms');
+    }
 }
