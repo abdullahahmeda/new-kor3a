@@ -326,18 +326,18 @@ return [
             'submenu' => [
                 [
                     'text'      => 'كل القرع',
-                    'url'       => 'admin/competitions'
+                    'url'       => 'dashboard/competitions'
                 ],
                 [
                     'text'      => 'إنشاء قرعة',
-                    'url'       => 'admin/competitions/create'
+                    'url'       => 'dashboard/competitions/create'
                 ]
             ]
         ],
         [
             'text'      => 'المشاركين',
             'icon'      => 'fas fa-users',
-            'url'       => 'admin/participants'
+            'url'       => 'dashboard/participants'
         ],
         [
             'text'      => 'المسوقون',
@@ -345,8 +345,28 @@ return [
             'submenu'   => [
                 [
                     'text'      => 'إضافة مسوق',
-                    'url'       => 'admin/marketers/create',
-                ]
+                    'url'       => 'dashboard/marketers/create',
+                ],
+                [
+                    'text'      => 'صفحة معلومات المسوق',
+                    'url'       => 'dashboard/marketers/info', // dashboard/marketers/1/info
+                ],
+                [
+                    'text'      => 'صفحة خدمات المسوق',
+                    'url'       => 'dashboard/marketers/services', // dashboard/marketers/1/services
+                ],
+                [
+                    'text'      => 'أرشيف المسوق',
+                    'url'       => 'dashboard/marketers/archive', // dashboard/marketers/1/archive
+                ],
+                [
+                    'text'      => 'شحن رصيد المسوق',
+                    'url'       => 'dashboard/marketers/charge', // dashboard/marketers/1/settings
+                ],
+                [
+                    'text'      => 'إعدادات المسوق',
+                    'url'       => 'dashboard/marketers/settings', // dashboard/marketers/1/settings
+                ],
             ]
 
         ],
@@ -356,14 +376,14 @@ return [
             'submenu'   => [
                 [
                     'text'      => 'إضافة مقدم خدمة',
-                    'url'       => 'admin/providers/create'
+                    'url'       => 'dashboard/providers/create'
                 ]
             ]
         ],
         [
             'text'      => 'إعدادات الأدمن',
             'icon'      => 'fas fa-cog',
-            'url'       => 'admin/admin'
+            'url'       => 'dashboard/admin'
         ],
         /* [
             'text'      => 'إعدادات الموقع',

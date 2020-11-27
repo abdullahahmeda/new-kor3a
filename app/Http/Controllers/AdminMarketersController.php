@@ -8,6 +8,6 @@ class AdminMarketersController extends Controller
 {
     public function create()
     {
-        return view('admin.marketers.create');
+        return view('dashboard.marketers.create');
     }
 }

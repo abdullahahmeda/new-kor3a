@@ -20,7 +20,7 @@
 
 @section('content')
 
-    <form method="POST" {{-- action="{{ route('admin.competitions.store') }}" --}} class="pb-4 @if ($errors->any()) was-validated @endif" enctype="multipart/form-data">
+    <form method="POST" {{-- action="{{ route('dashboard.competitions.store') }}" --}} class="pb-4 @if ($errors->any()) was-validated @endif" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">اسم الشركة</label>

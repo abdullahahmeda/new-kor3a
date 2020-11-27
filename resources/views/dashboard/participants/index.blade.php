@@ -32,7 +32,7 @@
                     <td>{{ $participant->competition->starting_place }}</td>
                     <td>{{ $participant->competition->finishing_place }}</td>
                     <td>
-                        <form class="d-inline-block" method="POST" action="{{ route('admin.participants.destroy', $participant) }}" onsubmit="event.preventDefault(); confirmDelete(this)">
+                        <form class="d-inline-block" method="POST" action="{{ route('dashboard.participants.destroy', $participant) }}" onsubmit="event.preventDefault(); confirmDelete(this)">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" href="">حذف</button>

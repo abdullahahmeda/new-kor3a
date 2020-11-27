@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAccess
+class MarketerAccess
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class AdminAccess
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && auth()->user()->role == 'admin') {
+        if (Auth::check() && auth()->user()->role == 'marketer') {
             return $next($request);
         }
         else {

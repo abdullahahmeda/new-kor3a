@@ -12,19 +12,19 @@ class AdminCompetitionsController extends Controller
     public function index()
     {
         $competitions = Competition::all();
-        return view('admin.competitions.index', [
+        return view('dashboard.competitions.index', [
             'competitions' => $competitions
         ]);
     }
 
     public function show(Competition $competition)
     {
-        return  view('admin.competitions.show', compact('competition'));
+        return  view('dashboard.competitions.show', compact('competition'));
     }
 
     public function create()
     {
-        return view('admin.competitions.create');
+        return view('dashboard.competitions.create');
     }
 
     public function store()
@@ -87,12 +87,12 @@ class AdminCompetitionsController extends Controller
 
         Competition::create($attributes);
 
-        return redirect()->route('admin.competitions.index')->with('message', 'تم إضافة القرعة بنجاح')->with('type', 'success');
+        return redirect()->route('dashboard.competitions.index')->with('message', 'تم إضافة القرعة بنجاح')->with('type', 'success');
     }
 
     public function edit(Competition $competition)
     {
-        return view('admin.competitions.edit', compact('competition'));
+        return view('dashboard.competitions.edit', compact('competition'));
     }
 
     public function update(Competition $competition)
@@ -148,13 +148,13 @@ class AdminCompetitionsController extends Controller
 
         $competition->update($attributes);
 
-        return redirect()->route('admin.competitions.index')->with('message', 'تم تعديل القرعة بنجاح')->with('type', 'success');
+        return redirect()->route('dashboard.competitions.index')->with('message', 'تم تعديل القرعة بنجاح')->with('type', 'success');
     }
 
     public function destroy(Competition $competition)
     {
         $competition->delete();
 
-        return redirect()->route('admin.competitions.index')->with('message', 'تم حذف القرعة بنجاح')->with('type', 'success');
+        return redirect()->route('dashboard.competitions.index')->with('message', 'تم حذف القرعة بنجاح')->with('type', 'success');
     }
 }

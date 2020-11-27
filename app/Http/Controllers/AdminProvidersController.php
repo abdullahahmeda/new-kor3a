@@ -8,6 +8,6 @@ class AdminProvidersController extends Controller
 {
     public function create()
     {
-        return view('admin.providers.create');
+        return view('dashboard.providers.create');
     }
 }

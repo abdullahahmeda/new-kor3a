@@ -12,7 +12,7 @@
     @endif
     <div class="d-flex justify-content-between">
         <h1>القرع</h1>
-        <a href="{{ route('admin.competitions.create') }}" class="btn btn-success">إضافة قرعة</a>
+        <a href="{{ route('dashboard.competitions.create') }}" class="btn btn-success">إضافة قرعة</a>
     </div>
 @stop
 
@@ -39,9 +39,9 @@
                     <td>{{ $competition->sponsor }}</td>
                     <td>{{ $competition->status == 'active' ? 'مفعلة' : 'منتهية' }}</td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="{{ route('admin.competitions.show', $competition) }}">عرض</a>
-                        <a class="btn btn-sm btn-warning" href="{{ route('admin.competitions.edit', $competition) }}">تعديل</a>
-                        <form class="d-inline-block" method="POST" action="{{ route('admin.competitions.destroy', $competition) }}" onsubmit="event.preventDefault(); confirmDelete(this)">
+                        <a class="btn btn-sm btn-info" href="{{ route('dashboard.competitions.show', $competition) }}">عرض</a>
+                        <a class="btn btn-sm btn-warning" href="{{ route('dashboard.competitions.edit', $competition) }}">تعديل</a>
+                        <form class="d-inline-block" method="POST" action="{{ route('dashboard.competitions.destroy', $competition) }}" onsubmit="event.preventDefault(); confirmDelete(this)">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" href="">حذف</button>

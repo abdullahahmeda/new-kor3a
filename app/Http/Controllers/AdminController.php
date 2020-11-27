@@ -13,7 +13,7 @@ class AdminController extends Controller
     {
         $total_participants = Participant::count();
         $total_competitions = Competition::count();
-        return view('admin.index', [
+        return view('dashboard.index', [
             'total_participants' => $total_participants,
             'total_competitions' => $total_competitions
         ]);
@@ -22,7 +22,7 @@ class AdminController extends Controller
     public function admin()
     {
         $admin = User::find(1);
-        return view('admin.admin', [
+        return view('dashboard.admin', [
             'admin' => $admin
         ]);
     }

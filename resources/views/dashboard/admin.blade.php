@@ -11,7 +11,7 @@
 
 @section('content')
     <div>
-        <form action="{{ route('admin.admin.update') }}" method="POST" class="@if (count($errors)) was-validated @endif">
+        <form action="{{ route('dashboard.admin.update') }}" method="POST" class="@if (count($errors)) was-validated @endif">
             @csrf
             <div class="form-group">
                 <label for="name">الاسم</label>

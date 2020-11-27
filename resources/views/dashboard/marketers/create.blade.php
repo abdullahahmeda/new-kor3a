@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="POST" {{-- action="{{ route('admin.competitions.store') }}" --}} class="pb-4 @if ($errors->any()) was-validated @endif" enctype="multipart/form-data">
+    <form method="POST" {{-- action="{{ route('dashboard.competitions.store') }}" --}} class="pb-4 @if ($errors->any()) was-validated @endif" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">اسم المسوق</label>
@@ -33,6 +33,15 @@
                     الحجز المعتمد
                 </label>
             </div>
+        </div>
+        <div class="form-group">
+            <label for="email">الإيميل</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+            @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
         <div class="form-group">
             <label for="password">كلمة السر</label>
