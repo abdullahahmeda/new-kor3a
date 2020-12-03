@@ -2,7 +2,7 @@
 
 function sendSASMS($to, $body) {
     $client = new \GuzzleHttp\Client();
-    $client->get('http://www.oursms.net/api/sendsms.php', [
+    $client->get('http://www.4jawaly.net/api/sendsms.php', [
         'query' => [
             'username' => env('SAUDI_SMS_username'),
             'password' => env('SAUDI_SMS_password'),
