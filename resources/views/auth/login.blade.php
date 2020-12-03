@@ -13,7 +13,8 @@
     <div class="container mx-auto">
 
         <div class="max-w-sm mx-auto bg-white p-4 mt-24 shadow-md rounded-md">
-
+            
+            <h1 class="text-2xl text-center mb-4 font-bold">تسجيل الدخول</h1>
             <div class="flex justify-center mb-4">
                 <img src="{{ asset('img/login.png') }}" alt="تسجيل الدخول">
             </div>

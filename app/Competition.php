@@ -32,6 +32,10 @@ class Competition extends Model
         return Carbon::parse($value)->tz('Asia/Aden')->format('Y-m-d H:00:00');
     }
 
+    public function getResultPhoneCountryCodeAttribute() {
+        return substr($this->result_phone, 0, 3);
+    }
+
     public function participants()
     {
         return $this->hasMany(Participant::class);

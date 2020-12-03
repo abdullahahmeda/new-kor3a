@@ -188,7 +188,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'admin',
+    'dashboard_url' => 'dashboard',
 
     'logout_url' => 'logout',
 

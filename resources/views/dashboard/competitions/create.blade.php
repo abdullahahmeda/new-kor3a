@@ -134,7 +134,17 @@
         </div>
         <div class="form-group">
             <label for="result_phone">الجوال الخاص باستقبال النتائج</label>
-            <input type="text" class="form-control" id="result_phone" name="result_phone" placeholder="مثال: +967123456789" value="{{ old('result_phone') }}" required>
+            <div class="justify-center">
+                <div>
+                    <input type="radio" name="phone_country" id="sa" checked value="966">
+                    <label for="sa">سعودي</label>
+                </div>
+                <div>
+                    <input type="radio" name="phone_country" id="ye" value="967">
+                    <label for="ye">يمني</label>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="result_phone" name="result_phone" placeholder="مثال: 501212121" value="{{ old('result_phone') }}" required>
             @error('result_phone')
                 <div class="invalid-feedback">
                     {{ $message }}

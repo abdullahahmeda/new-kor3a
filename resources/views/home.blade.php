@@ -152,11 +152,11 @@
                                 <label>رقم الجوال للمسافر:</label>
                                 <div class="flex justify-center mt-2">
                                     <div class="ml-2">
-                                        <input type="radio" name="phone_country" id="sa_{{ $competition->id }}" checked value="+966">
+                                        <input type="radio" name="phone_country" id="sa_{{ $competition->id }}" checked value="966">
                                         <label for="sa_{{ $competition->id }}">سعودي</label>
                                     </div>
                                     <div class="mr-2">
-                                        <input type="radio" name="phone_country" id="ye_{{ $competition->id }}" value="+967">
+                                        <input type="radio" name="phone_country" id="ye_{{ $competition->id }}" value="967">
                                         <label for="ye_{{ $competition->id }}">يمني</label>
                                     </div>
                                 </div>

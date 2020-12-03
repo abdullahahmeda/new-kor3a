@@ -10,4 +10,8 @@ class Participant extends Model
     {
         return $this->belongsTo(Competition::class);
     }
+
+    public function getPhoneCountryCodeAttribute() {
+        return substr($this->phone, 0, 3);
+    }
 }

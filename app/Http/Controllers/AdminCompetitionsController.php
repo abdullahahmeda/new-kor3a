@@ -41,6 +41,7 @@ class AdminCompetitionsController extends Controller
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'booking_link' => ['required', 'url'],
+            'phone_country' => ['required', Rule::in(['966', '967'])],
             'result_phone' => ['required'],
             'sponsor' => ['string', 'required'],
             'sponsor_url' => ['url'],
@@ -85,6 +86,8 @@ class AdminCompetitionsController extends Controller
 
         // Another way: Make date intervals and check for overlap. if overlapped, then the user has registered already.
 
+        $attributes['result_phone'] = request('phone_country') . request('result_phone');
+        unset($attributes['phone_country']);
         Competition::create($attributes);
 
         return redirect()->route('dashboard.competitions.index')->with('message', 'تم إضافة القرعة بنجاح')->with('type', 'success');
@@ -109,6 +112,7 @@ class AdminCompetitionsController extends Controller
             'starting_place' => ['required', 'string'],
             'finishing_place' => ['required', 'string'],
             'booking_link' => ['required', 'url'],
+            'phone_country' => ['required', Rule::in(['966', '967'])],
             'result_phone' => ['required'],
             'sponsor' => ['string', 'required'],
             'sponsor_url' => ['url'],
@@ -146,6 +150,8 @@ class AdminCompetitionsController extends Controller
         $date = Carbon::createFromFormat('Y-m-d H:00:00', request('finish_at'), 'Asia/Aden');
         $attributes['finish_at'] = $date->tz('UTC')->format('Y-m-d H:00:00');
 
+        $attributes['result_phone'] = request('phone_country') . request('result_phone');
+        unset($attributes['phone_country']);
         $competition->update($attributes);
 
         return redirect()->route('dashboard.competitions.index')->with('message', 'تم تعديل القرعة بنجاح')->with('type', 'success');
