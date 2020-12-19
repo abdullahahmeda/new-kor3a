@@ -36,6 +36,10 @@ class Competition extends Model
         return substr($this->result_phone, 0, 3);
     }
 
+    public function getSmsTextAttribute() {
+        return 'تم الاشتراك بنجاح في قرعة يمن باص. لتأكيد الاشتراك برجاء حجز الرحلة المناسبة على ' . $this->booking_link;
+    }
+
     public function participants()
     {
         return $this->hasMany(Participant::class);

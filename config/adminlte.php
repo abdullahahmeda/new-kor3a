@@ -340,6 +340,11 @@ return [
             'url'       => 'dashboard/participants'
         ],
         [
+            'text'      => 'أرقام الواتساب',
+            'icon'      => 'fas fa-users',
+            'url'       => 'dashboard/whatsapp'
+        ],
+        [
             'text'      => 'المسوقون',
             'icon'      => 'fas fa-user',
             'submenu'   => [

@@ -37,6 +37,9 @@ Route::prefix('dashboard')->middleware('admin')->group(function() {
     Route::delete('competitions/{competition}', 'AdminCompetitionsController@destroy')->name('dashboard.competitions.destroy');
     Route::get('competitions/{competition}', 'AdminCompetitionsController@show')->name('dashboard.competitions.show');
 
+    Route::get('whatsapp', 'AdminWhatsappPhonesController@index')->name('dashboard.whatsapp.index');
+    Route::delete('whatsapp/{whatsapp_phone}', 'AdminWhatsappPhonesController@destroy')->name('dashboard.whatsapp.destroy');
+
     Route::get('marketers/create', 'AdminMarketersController@create');
     
     Route::get('marketers/info', 'MarketersController@info');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Competition;
 use App\Participant;
+use App\WhatsappPhone;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -13,11 +14,14 @@ class ParticipantCompetitionController extends Controller
     {
         request()->validate([
             'phone' => ['required', 'string', 'regex:/^[0-9]+$/'],
-            'phone_country' => ['required', Rule::in(['966', '967'])]
+            'phone_country' => ['required', Rule::in(['966', '967'])],
+            'whatsapp_phone' => ['required', 'regex:/^\+[0-9]+$/']
         ], [
             'phone.regex' => 'الرجاء إدخال رقم جوال سعودي أو يمني صحيح',
             'phone.required' => 'رقم الجوال إجباري',
-            'phone_country.required' => 'اختيار الدولة إجباري'
+            'phone_country.required' => 'اختيار الدولة إجباري',
+            'whatsapp_phone.required' => 'رقم الواتساب إجباري',
+            'whatsapp_phone.regex' => 'الرجاء إدخال رقم واتساب صحيح'
         ]);
 
         $duplicate_phones = Competition::where('status', 'active')->get()->map->participants->flatten()->where('phone', request('phone'));
@@ -32,9 +36,13 @@ class ParticipantCompetitionController extends Controller
 
         $participant->save();
 
+        $whatsapp_phone = new WhatsappPhone();
+        $whatsapp_phone->phone = request('whatsapp_phone');
+        $whatsapp_phone->text = $competition->sms_text;
+        $whatsapp_phone->save();
+
         // Send sms
-        $sms_text = 'تم الاشتراك بنجاح في قرعة يمن باص. لتأكيد الاشتراك برجاء حجز الرحلة المناسبة على ' . $competition->booking_link;
-        sendSMS(request('phone_country'), $participant->phone, $sms_text);
+        //sendSMS(request('phone_country'), $participant->phone, $competition->sms_text);
 
         return redirect()->route('home')->with('message', 'تم الاشتراك بنجاح')->with('type', 'success');
     }

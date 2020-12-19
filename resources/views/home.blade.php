@@ -162,6 +162,10 @@
                                 </div>
                                 <input type="text" class="border shadow-sm px-1 py-1 rounded-sm border-gray-500 mt-2 w-full" name="phone" placeholder="" required>
                             </div>
+                            <div class="form-group mt-2">
+                                <label for="whatsapp_phone">رقم الواتساب</label>
+                                <input type="text" class="border shadow-sm px-1 py-1 rounded-sm border-gray-500 mt-2 w-full" id="whatsapp_phone" name="whatsapp_phone" placeholder="مثال: +20123456789" required>
+                            </div>
                             <button class="bg-green-600 hover:bg-green-700 transition duration-300 px-4 py-2 rounded-md shadow-md hover:shadow-lg mt-2 text-white">احجز الرحلة</button>
                             <p class="text-xs mt-2">بمشاركتك فأنت توافق على الشروط والأحكام</p>
                         </form>

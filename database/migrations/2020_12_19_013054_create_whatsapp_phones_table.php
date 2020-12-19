@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParticipantsTable extends Migration
+class CreateWhatsappPhonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('whatsapp_phones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('phone');
-            $table->string('whatsapp_phone');
-            $table->unsignedBigInteger('competition_id')->nullable();
+            $table->text('text');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -30,6 +28,6 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participants');
+        Schema::dropIfExists('whatsapp_phones');
     }
 }
